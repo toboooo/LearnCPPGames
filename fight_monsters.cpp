@@ -289,7 +289,7 @@ void discover_potion(Player &player) {
 		Potion potion = Potion::get_random_potion();
 		player.drink_potion(potion);
 		std::cout << "You drank a " << potion.get_name()
-			<< ". You health is now " << player.get_health()
+			<< ". Your health is now " << player.get_health()
 			<< " and you can deal " << player.get_damage() << " damage.\n";
 	}
 }
