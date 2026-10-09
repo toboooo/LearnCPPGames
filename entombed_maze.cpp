@@ -8,7 +8,7 @@ char maze_lookup[32] = {
 	2, 0, 0, 0,
 	1, 1, 1, 2,
 	0, 0, 0, 0,
-	2, 2, 1, 2,
+	2, 0, 1, 2,
 	2, 0, 0, 0
 };
 
@@ -86,8 +86,8 @@ void print_atari_maze(int width, int n_lines) {
 	maze_line[full_width-1] = 1;
 	for (; n_lines > 0; --n_lines) {
 		for (int i = 2; i < width + 2; ++i) {
-			int a = i < 4 ? 0 : maze_line[i-2];
-			int b = i < 3 ? 1 : maze_line[i-1];
+			int a = i < 4 ? 1 : maze_line[i-2];
+			int b = i < 3 ? 0 : maze_line[i-1];
 			int c = i < 3 ? Random::get(0, 1) : prev_line[i-1];
 			int d = prev_line[i];
 			int e = i == width + 1 ? Random::get(0, 1) : prev_line[i+1];
