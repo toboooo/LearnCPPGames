@@ -1,6 +1,56 @@
 #include <iostream>
 #include "random.hpp"
 
+// The lookup table works by ensuring that three rules are maintained:
+// 1. No 2x2 squares of the same bit value
+// 2. No bit shall be trapped between three of the opposite value
+// 3. Do not allow a vertical path to be blocked by placing a 1
+// Make sure to consider the possible values of the next bit, Y
+// A random bit can be placed when none of the rules apply
+
+// | |c|d|e|
+// |a|b|X|Y|
+
+// 00000 -> 1 (2x2 rule)
+// 00001 -> 1 (2x2 rule)
+// 00010 -> 1 (3 trap rule)
+// 00011 -> 2 (vertical path not broken by X=1)
+
+// 00100 -> 0 (X=1, Y=0 would trap X between 3 zeros)
+// 00101 -> 0 (3 trap rule)
+// 00110 -> 2 (X=1 does not block a vertical path)
+// 00111 -> 2 (X=1 does not block a vertical path)
+
+// 01000 -> 1 (3 trap rule)
+// 01001 -> 1 (3 trap rule)
+// 01010 -> 1 (3 trap rule)
+// 01011 -> 1 (3 trap rule)
+
+// 01100 -> 2 (X=1 still allows a vertical path if Y=0)
+// 01101 -> 0 (3 trap rule)
+// 01110 -> 0 (2x2 rule)
+// 01111 -> 0 (2x2 rule)
+
+// 10000 -> 1 (2x2 rule)
+// 10001 -> 1 (2x2 rule)
+// 10010 -> 1 (3 trap rule)
+// 10011 -> 2 (X=1 does not block a vertical path)
+
+// 10100 -> 0 (3 trap rule)
+// 10101 -> 0 (3 trap rule)
+// 10110 -> 0 (3 trap rule)
+// 10111 -> 0 (3 trap rule)
+
+// 11000 -> 2 (X=1 does not necessarily block a vertical path (if Y=0))
+// 11001 -> 0 (X=1 would break a vertical path)
+// 11010 -> 1 (3 trap rule)
+// 11011 -> 2 (No vertical path is available anyway)
+
+// 11100 -> 2 (X=1 does not necessarily block a vertical path (if Y=0))
+// 11101 -> 0 (3 trap rule)
+// 11110 -> 0 (2x2 rule)
+// 11111 -> 0 (2x2 rule)
+
 char maze_lookup[32] = {
 	1, 1, 1, 2,
 	0, 0, 2, 2,
